@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const dbConnect = require("./config/dbConnect");
 const userRoute = require("./routes/userRoute");
 const bodyParser = require("body-parser");
+const { notFound, errorHandler } = require("./middleware/errorHandler");
 
 dotenv.config();
 
@@ -15,6 +16,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 4000;
 
 app.use("/api/user", userRoute);
+
+app.use(notFound);
+app.use(errorHandler);
 
 dbConnect();
 
